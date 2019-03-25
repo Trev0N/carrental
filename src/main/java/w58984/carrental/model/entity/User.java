@@ -1,56 +1,86 @@
 package w58984.carrental.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 import java.time.OffsetDateTime;
-import java.util.Set;
 
-@Data
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Builder(toBuilder = true)
-@Table(name = "users")
+@Table(schema = "carrental", name = "user")
+@SequenceGenerator(schema = "carrental", name = "id_generator", sequenceName = "user_seq_id", allocationSize = 1)
 public class User {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "user_id")
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "id_generator")
+    private Long id;
 
-    @Column(name = "email")
-    @Email(message = "*Please provide a valid Email")
-    @NotEmpty(message = "*Please provide an email")
-    private String email;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
-    @Column(name = "password")
-    @Length(min = 5, message = "*Your password must have at least 5 characters")
-    @NotEmpty(message = "*Please provide your password")
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
+    @NotBlank
+    private String firstname;
+
+    @NotBlank
+    private String lastname;
+
+    @NotBlank
+    private String mail;
+
+    @NotBlank
+    private String login;
+
+    @NotBlank
     private String password;
 
-    @Column(name = "name")
-    @NotEmpty(message = "*Please provide your name")
-    private String name;
+    @NotBlank
+    private String salt;
 
-    @Column(name = "last_name")
-    @NotEmpty(message = "*Please provide your last name")
-    private String lastName;
+    @Builder.Default
+    @CreatedDate
+   // @Column(name = "created_at")
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
+    protected OffsetDateTime createdat = OffsetDateTime.now();
 
-    @Column(name = "active")
-    private int active;
+    @Builder.Default
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
+    @UpdateTimestamp
+    protected OffsetDateTime modifiedat = OffsetDateTime.now();
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
+    public enum Status {
+        /**
+         * {@code active}
+         */
+        A,
 
+        /**
+         * {@code inActive}
+         */
+        I,
+    }
+
+    public enum Role {
+        /**
+         * {@code administrator}
+         */
+        A,
+
+        /**
+         * {@code user}
+         */
+        U,
+    }
 }

@@ -10,20 +10,21 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
-@Getter
 public class UserCreateDTO {
+
     @NotEmpty
     @Length(max = 255)
-    @ApiModelProperty(value = "first name", required = true)
-    private String firstName;
+    @ApiModelProperty(value = "First name", required = true)
+    private String firstname;
 
     @NotEmpty
     @Length(max = 255)
     @ApiModelProperty(value = "Last name", required = true)
-    private String lastName;
+    private String lastname;
 
     @NotEmpty
     @Length(max = 255)
@@ -37,7 +38,7 @@ public class UserCreateDTO {
 
     @NotEmpty
     @ApiModelProperty(value = "Re-captcha", required = true)
-    private String reCaptcha;
+    private String recaptcha;
 
     @NotEmpty
     @Length(max = 255)
