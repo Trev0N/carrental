@@ -32,10 +32,12 @@ public class User {
     private Status status;
 
     @NotBlank
-    private String firstname;
+    @Column(name = "first_name")
+    private String firstName;
 
     @NotBlank
-    private String lastname;
+    @Column(name = "last_name")
+    private String lastName;
 
     @NotBlank
     private String mail;
@@ -51,14 +53,15 @@ public class User {
 
     @Builder.Default
     @CreatedDate
-   // @Column(name = "created_at")
+    @Column(name = "created_at")
     @JsonFormat(shape = JsonFormat.Shape.STRING)
-    protected OffsetDateTime createdat = OffsetDateTime.now();
+    protected OffsetDateTime createdAt = OffsetDateTime.now();
 
     @Builder.Default
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     @UpdateTimestamp
-    protected OffsetDateTime modifiedat = OffsetDateTime.now();
+    @Column(name = "modified_at")
+    protected OffsetDateTime modifiedAt = OffsetDateTime.now();
 
     public enum Status {
         /**

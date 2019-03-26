@@ -22,8 +22,8 @@ public class UserService {
         String encryptedPassword = BCrypt.hashpw(api.getPassword(), salt);
 
         User user = User.builder()
-                .firstname(api.getFirstname())
-                .lastname(api.getFirstname())
+                .firstName(api.getFirstName())
+                .lastName(api.getFirstName())
                 .mail(api.getMail())
                 .login(api.getLogin())
                 .password(encryptedPassword)

@@ -19,12 +19,12 @@ public class UserCreateDTO {
     @NotEmpty
     @Length(max = 255)
     @ApiModelProperty(value = "First name", required = true)
-    private String firstname;
+    private String firstName;
 
     @NotEmpty
     @Length(max = 255)
     @ApiModelProperty(value = "Last name", required = true)
-    private String lastname;
+    private String lastName;
 
     @NotEmpty
     @Length(max = 255)
