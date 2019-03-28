@@ -1,12 +1,14 @@
 package w58984.carrental.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.OffsetDateTime;
 
@@ -25,6 +27,14 @@ public class Car {
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "id_generator")
     private Long id;
 
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @NotBlank
+    @Column(name = "register_name")
+    private String registerName;
+
     @NotBlank
     private String mark;
 
@@ -32,10 +42,14 @@ public class Car {
     private String model;
 
     @NotNull
-    private Double engine;
+    private int engine;
 
     @NotNull
     private int power;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "garage_id")
+    private Garage garage;
 
     @Builder.Default
     @CreatedDate
