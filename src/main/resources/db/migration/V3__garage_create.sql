@@ -7,9 +7,7 @@ CREATE SEQUENCE carrental.garage_seq_id;
 CREATE TABLE carrental.garage (
                                 "id"           BIGINT                   NOT NULL DEFAULT nextval('carrental.garage_seq_id'),
                                 "name"         VARCHAR(255)             NOT NULL,
-                                "address"      VARCHAR(255)             NOT NULL,
-                                "created_at"    TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
-                                "modified_at"   TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
+                                "address"      VARCHAR(255)             NOT NULL
 );
 
 ALTER TABLE carrental.garage

@@ -28,25 +28,27 @@ public class Garage {
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "id_generator")
     private Long id;
 
-
+    @JsonIgnore
     @NotBlank
     private String name;
 
-
+    @JsonIgnore
     @NotBlank
     private String address;
 
 
-    @Builder.Default
-    @CreatedDate
-    @Column(name = "created_at")
-    @JsonFormat(shape = JsonFormat.Shape.STRING)
-    protected OffsetDateTime createdAt = OffsetDateTime.now();
-
-
-    @Builder.Default
-    @JsonFormat(shape = JsonFormat.Shape.STRING)
-    @UpdateTimestamp
-    @Column(name = "modified_at")
-    protected OffsetDateTime modifiedAt = OffsetDateTime.now();
+//    @Builder.Default
+//    @CreatedDate
+//    @Column(name = "created_at")
+//    @JsonFormat(shape = JsonFormat.Shape.STRING)
+//    @JsonIgnore
+//    protected OffsetDateTime createdAt = OffsetDateTime.now();
+//
+//
+//    @Builder.Default
+//    @JsonFormat(shape = JsonFormat.Shape.STRING)
+//    @UpdateTimestamp
+//    @Column(name = "modified_at")
+//    @JsonIgnore
+//    protected OffsetDateTime modifiedAt = OffsetDateTime.now();
 }

@@ -31,6 +31,10 @@ public class CarCreateDTO {
     @ApiModelProperty(value = "Register")
     private String registerName;
 
+    @NotNull
+    @ApiModelProperty(value = "Garage id")
+    private Long garageId;
+
     @NotEmpty
     @Length(max = 255)
     @ApiModelProperty(value = "Mark", required = true)
@@ -48,5 +52,6 @@ public class CarCreateDTO {
     @NotNull
     @ApiModelProperty(value = "Engine Power (HP)", required = true)
     private int power;
+
 
 }

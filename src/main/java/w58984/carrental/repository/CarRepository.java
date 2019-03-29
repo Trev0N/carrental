@@ -10,4 +10,5 @@ public interface CarRepository extends JpaRepository<Car,Long> {
     Car findByRegisterNameAndUser(String name, User user);
 
     List<Car> findByUser(User user);
+    List<Car> getAllByCreatedAt();
 }

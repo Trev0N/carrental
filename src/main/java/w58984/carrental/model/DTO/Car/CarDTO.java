@@ -23,4 +23,6 @@ public class CarDTO {
 
     private int power;
 
+    private Long garageId;
+
 }

@@ -31,7 +31,7 @@ public class CarService {
         return carRepository.findById(id);
     }
 
-    public List<CarDTO> getAll(Principal principal){
+    public List<CarDTO> getAllMyCars(Principal principal){
         User user = userRepository.findByLogin(principal.getName());
         return carRepository.findByUser(user).stream().map(
                 row -> new CarDTO(
@@ -40,21 +40,40 @@ public class CarService {
                         row.getMark(),
                         row.getModel(),
                         row.getEngine(),
-                        row.getPower()
+                        row.getPower(),
+                        row.getGarage().getId()
                 )).collect(Collectors.toList());
 
 
     }
 
+    public List<CarDTO> getAll(){
+        carRepository.findAll().toArray();
+        return carRepository.getAllByCreatedAt().stream().map(
+                row -> new CarDTO(
+                        row.getId(),
+                        row.getRegisterName(),
+                        row.getMark(),
+                        row.getModel(),
+                        row.getEngine(),
+                        row.getPower(),
+                        row.getGarage().getId()
+                )).collect(Collectors.toList());
+        )
+               
+    }
 
-    public void create(CarCreateDTO api,Principal principal, Garage garage){
+
+    public void create(CarCreateDTO api,Principal principal){
         User user = userRepository.findByLogin(principal.getName());
         Optional.ofNullable(carRepository.findByRegisterNameAndUser(api.getRegisterName(),user)).ifPresent(
                 e-> {
                     throw new IllegalArgumentException("Similar car exists");
                 }
         );
-                
+        Garage garage = new Garage();
+        garage.setId(api.getGarageId());
+
         Car car = Car.builder()
                 .user(user)
                 .registerName(api.getRegisterName())
