@@ -1,11 +1,7 @@
 package w58984.carrental.controller;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
-import jdk.nashorn.internal.ir.annotations.Ignore;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 import w58984.carrental.model.DTO.Car.CarCreateDTO;
 import w58984.carrental.model.DTO.Car.CarDTO;
-import w58984.carrental.model.entity.Garage;
 import w58984.carrental.service.CarService;
 
 import javax.validation.Valid;
@@ -53,7 +48,7 @@ public class CarController {
     }
 
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "/public",method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Get all my cars", notes = "Get all my cars.")
     public ResponseEntity<List<CarDTO>> getAllMyCars(Principal principal){
