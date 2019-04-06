@@ -24,8 +24,6 @@ import javax.validation.constraints.NotNull;
 public class CarCreateDTO {
 
 
-
-
     @NotEmpty
     @Length(max = 255)
     @ApiModelProperty(value = "Register")

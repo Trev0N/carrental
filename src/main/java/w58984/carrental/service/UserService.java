@@ -1,5 +1,6 @@
 package w58984.carrental.service;
 
+import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,10 @@ public class UserService {
     public void create(UserCreateDTO api) {
         String salt = BCrypt.gensalt();
         String encryptedPassword = BCrypt.hashpw(api.getPassword(), salt);
+
+        User userExists = userRepository.findByLogin(api.getLogin());
+        if(!(userExists ==null))
+        throw new IllegalArgumentException("Your login is busy");
 
         User user = User.builder()
                 .firstName(api.getFirstName())

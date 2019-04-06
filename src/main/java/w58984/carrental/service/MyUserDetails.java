@@ -27,7 +27,16 @@ public class MyUserDetails implements UserDetailsService {
         if(user == null){
             throw new UsernameNotFoundException("User '" + username + "' not found");
         }
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE" + (user.getRole().equals("A") ? "ADMIN" : "USER"));
+
+//        String role;
+//        if(user.getRole().name().equals("A")){
+//            role="ROLEADMIN";
+//        }
+//        else
+//            role="ROLEUSER";
+//
+//        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role);
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE" + (user.getRole().name().equals("A") ? "ADMIN" : "USER"));
         return org.springframework.security.core.userdetails.User
                 .withUsername(username)
                 .password(user.getPassword())
