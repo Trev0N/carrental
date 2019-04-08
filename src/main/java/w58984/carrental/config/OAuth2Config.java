@@ -16,6 +16,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
+import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 import w58984.carrental.service.MyUserDetails;
 
 import javax.sql.DataSource;
@@ -25,9 +26,20 @@ import javax.sql.DataSource;
 @EnableResourceServer
 public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
 
-    private static TokenStore tokenStore = new InMemoryTokenStore();
+    @Bean
+    public TokenStore tokenStore(){
+        return new JdbcTokenStore(dataSource);
+    }
+
+
+   // private static TokenStore tokenStore = new InMemoryTokenStore();
+
+
+
     @Autowired
     DataSource dataSource;
+
+
 
     @Autowired
     @Qualifier("authenticationManagerBean")
@@ -52,7 +64,7 @@ public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints
                 .pathMapping("/oauth/token", "/api/login")
-                .tokenStore(tokenStore)
+                .tokenStore(tokenStore())
                 .authenticationManager(authenticationManager)
                 .userDetailsService(myUserDetails);
     }
@@ -68,7 +80,7 @@ public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
     @Primary
     public DefaultTokenServices defaultTokenServices() {
         DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
-        defaultTokenServices.setTokenStore(tokenStore);
+        defaultTokenServices.setTokenStore(tokenStore());
         defaultTokenServices.setSupportRefreshToken(true);
         return defaultTokenServices;
     }

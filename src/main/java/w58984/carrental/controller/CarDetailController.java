@@ -14,34 +14,45 @@ import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
 import w58984.carrental.model.DTO.Car.CarCreateDTO;
 import w58984.carrental.model.DTO.CarDetail.CarDetailCreateDTO;
+import w58984.carrental.model.DTO.CarDetail.CarDetailUpdateDTO;
 import w58984.carrental.model.entity.CarDetail;
 import w58984.carrental.service.CarDetailService;
+import w58984.carrental.service.CarService;
 
 import javax.validation.Valid;
+import javax.xml.ws.RequestWrapper;
 import java.security.Principal;
 
 @RestController
 @RequestMapping(value = "/cardetail")
 public class CarDetailController {
     CarDetailService carDetailService;
+    CarService carService;
 
     @Autowired
-    public CarDetailController(CarDetailService carDetailService){this.carDetailService=carDetailService;}
+    public CarDetailController(CarDetailService carDetailService, CarService carService){this.carDetailService=carDetailService;
+    this.carService=carService;}
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ApiOperation(value = "Add car details ", notes = "Add necessary car details to service. ")
     public ResponseEntity<Void> createCar(
             @RequestBody @Valid @NonNull final CarDetailCreateDTO api
     ){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        boolean hasUserRole = authentication.getAuthorities().stream()
-                .anyMatch(r -> r.getAuthority().equals("ROLEADMIN"));
-        if (!hasUserRole) {
-            throw new IllegalArgumentException("You don't have permission");
-        }
+        carService.AuthenticationAdmin();
         carDetailService.create(api);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    @RequestMapping(value = "/update", method = RequestMethod.PUT)
+    @ApiOperation(value = "Update car detail",notes = "Update car details that you want. ")
+    public ResponseEntity<CarDetailUpdateDTO> updateCarDetail(@RequestBody CarDetailUpdateDTO carDetailUpdateDTO){
+        carService.AuthenticationAdmin();
+       return ResponseEntity.status(HttpStatus.OK).body(carDetailService.updateDetails(carDetailUpdateDTO));
+    }
+
+
 
 }
+
+
+

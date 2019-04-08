@@ -31,11 +31,11 @@ public class RentController {
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ApiOperation(value = "Create rent ", notes = "Rent car. ")
     public ResponseEntity<Void> rentCar(
-            @RequestBody @Valid @NonNull final RentCreateDTO api,@RequestBody CarRentDTO apicar,
+            @RequestBody @Valid @NonNull final RentCreateDTO api,
             @ApiIgnore
                     Principal principal
     ){
-        rentService.create(api, apicar, principal);
+        rentService.create(api, principal);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

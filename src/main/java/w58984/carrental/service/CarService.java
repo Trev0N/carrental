@@ -2,18 +2,25 @@ package w58984.carrental.service;
 
 import org.hibernate.type.descriptor.java.OffsetDateTimeJavaDescriptor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import w58984.carrental.model.DTO.Car.CarCreateDTO;
 import w58984.carrental.model.DTO.Car.CarDTO;
+import w58984.carrental.model.DTO.Car.CarReadyDTO;
 import w58984.carrental.model.DTO.Car.CarUpdateDTO;
 import w58984.carrental.model.entity.Car;
+import w58984.carrental.model.entity.CarDetail;
 import w58984.carrental.model.entity.Garage;
 import w58984.carrental.model.entity.User;
+import w58984.carrental.model.entity.enums.StatusEnum;
+import w58984.carrental.repository.CarDetailRepository;
 import w58984.carrental.repository.CarRepository;
 import w58984.carrental.repository.UserRepository;
 
 import java.security.Principal;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -22,11 +29,13 @@ import java.util.stream.Collectors;
 public class CarService {
     private CarRepository carRepository;
     private UserRepository userRepository;
+    private CarDetailRepository carDetailRepository;
 
     @Autowired
-    public CarService (UserRepository userRepository,CarRepository carRepository){
+    public CarService (UserRepository userRepository,CarRepository carRepository, CarDetailRepository carDetailRepository){
         this.userRepository=userRepository;
         this.carRepository=carRepository;
+        this.carDetailRepository=carDetailRepository;
     }
 
     public Optional<Car> findById(Long id){
@@ -64,6 +73,31 @@ public class CarService {
 
     }
 
+    public List<CarReadyDTO> getAllReady(){
+
+        return  carDetailRepository.findAllByStatusEnum(StatusEnum.READY_TO_RENT).stream().map(
+                row -> new CarReadyDTO(
+                        row.getCar().getId(),
+                        row.getCar().getRegisterName(),
+                        row.getCar().getMark(),
+                        row.getCar().getModel(),
+                        row.getCar().getEngine(),
+                        row.getCar().getPower(),
+                        row.getCar().getGarage().getId(),
+                        row.getPrice()
+
+
+                )).collect(Collectors.toList());
+
+    }
+    public void AuthenticationAdmin() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        boolean hasUserRole = authentication.getAuthorities().stream()
+                .anyMatch(r -> r.getAuthority().equals("ROLEADMIN"));
+        if (!hasUserRole) {
+            throw new IllegalArgumentException("You don't have permission");
+        }
+    }
 
     public void create(CarCreateDTO api,Principal principal){
         User user = userRepository.findByLogin(principal.getName());
@@ -105,7 +139,16 @@ public class CarService {
         carRepository.save(car);
     }
 
-    public void delete(Car car){
+    public void delete(Long id, Principal principal) throws IllegalAccessException {
+        User user = userRepository.findByLogin(principal.getName());
+
+       if(carRepository.getByIdAndUser(id, user)==null)
+           throw new IllegalAccessException("You can not delete not your's car, or your car isn't exists");
+
+
+        Car car = carRepository.getById(id);
+        CarDetail carDetail = carDetailRepository.getByCar_Id(id);
+        carDetailRepository.delete(carDetail);
         carRepository.delete(car);
     }
 }

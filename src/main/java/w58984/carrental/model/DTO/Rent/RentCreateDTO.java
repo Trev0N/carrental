@@ -20,9 +20,12 @@ import java.util.Date;
 public class RentCreateDTO {
 
     @NotNull
+    private Long idCar;
+
+    @NotNull
     @DateTimeFormat
     @ApiModelProperty("Rent finish date")
-    Date rentEndDate;
+    private Date rentEndDate;
 
 
 
