@@ -11,6 +11,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.time.OffsetDateTime;
 import java.util.Date;
 
 @Getter
@@ -25,7 +26,7 @@ public class RentCreateDTO {
     @NotNull
     @DateTimeFormat
     @ApiModelProperty("Rent finish date")
-    private Date rentEndDate;
+    private OffsetDateTime rentEndDate;
 
 
 

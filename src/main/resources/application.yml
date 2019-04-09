@@ -3,7 +3,7 @@ spring:
     name: carrental
   flyway:
     locations: classpath:db/migration
-    enabled: true
+    enabled: false
   jpa:
     database: POSTGRESQL
     show-sql: true

@@ -44,7 +44,7 @@ public class Rent {
     @DateTimeFormat
     @Column(name = "rent_end_date")
     @JsonFormat(shape = JsonFormat.Shape.STRING)
-    private Date rentEndDate;
+    private OffsetDateTime rentEndDate;
 
 
 }
