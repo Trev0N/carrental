@@ -1,5 +1,6 @@
 package w58984.carrental.service;
 
+import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import w58984.carrental.model.DTO.Car.CarDTO;
@@ -65,6 +66,9 @@ public class RentService {
     public void create(RentCreateDTO api, Principal principal){
         User user = userRepository.findByLogin(principal.getName());
         Car car =carRepository.findById(api.getIdCar()).get();
+
+        Preconditions.checkNotNull(carDetailRepository.getByCar_Id(api.getIdCar()),"Car isn't ready to rent");
+
 
         if(carDetailRepository.getByCar_Id(api.getIdCar()).getStatusEnum().equals(StatusEnum.READY_TO_RENT)) {
             Rent rent = Rent.builder()

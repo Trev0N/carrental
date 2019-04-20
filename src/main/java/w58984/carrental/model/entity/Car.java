@@ -10,6 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
 
@@ -62,5 +63,6 @@ public class Car {
     @UpdateTimestamp
     @Column(name = "modified_at")
     protected OffsetDateTime modifiedAt = OffsetDateTime.now();
+
 
 }
