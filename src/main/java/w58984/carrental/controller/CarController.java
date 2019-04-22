@@ -36,7 +36,7 @@ public class CarController {
             @ApiIgnore
             Principal principal
             ){
-        carService.AuthenticationAdmin();
+        carService.authenticationAdmin();
         carService.create(api, principal);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -44,7 +44,7 @@ public class CarController {
 
 
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "/public", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Get all", notes = "Get all cars.")
     public ResponseEntity<List<CarDTO>> getAll(){
@@ -62,7 +62,7 @@ public class CarController {
 
 
 
-    @RequestMapping(value = "/public",method = RequestMethod.GET)
+    @RequestMapping(value = "/",method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Get all my cars", notes = "Get all my cars.")
     public ResponseEntity<List<CarDTO>> getAllMyCars(
@@ -77,7 +77,7 @@ public class CarController {
     @ApiOperation(value = "Delete car", notes = "Delete your car.")
     public ResponseEntity<Void> delete(@PathVariable(value = "id") @PathParam(value = "id") @NonNull final Long id,
                                        @ApiIgnore Principal principal) throws IllegalAccessException {
-        carService.AuthenticationAdmin();
+        carService.authenticationAdmin();
 
     carService.delete(id, principal);
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);

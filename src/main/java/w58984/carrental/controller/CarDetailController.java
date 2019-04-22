@@ -38,7 +38,7 @@ public class CarDetailController {
     public ResponseEntity<Void> createCar(
             @RequestBody @Valid @NonNull final CarDetailCreateDTO api
     ){
-        carService.AuthenticationAdmin();
+        carService.authenticationAdmin();
         carDetailService.create(api);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -46,7 +46,7 @@ public class CarDetailController {
     @RequestMapping(value = "/update", method = RequestMethod.PUT)
     @ApiOperation(value = "Update car detail",notes = "Update car details that you want. ")
     public ResponseEntity<CarDetailUpdateDTO> updateCarDetail(@RequestBody CarDetailUpdateDTO carDetailUpdateDTO){
-        carService.AuthenticationAdmin();
+        carService.authenticationAdmin();
        return ResponseEntity.status(HttpStatus.OK).body(carDetailService.updateDetails(carDetailUpdateDTO));
     }
 

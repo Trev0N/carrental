@@ -3,7 +3,7 @@ spring:
     name: carrental
   flyway:
     locations: classpath:db/migration
-    enabled: false
+    enabled: true
   jpa:
     database: POSTGRESQL
     show-sql: true
@@ -15,7 +15,7 @@ spring:
           use_jdbc_metadata_defaults: false
   datasource:
     platform: postgres
-    url: jdbc:postgresql://localhost/carrental
+    url: jdbc:postgresql://192.168.1.199/carrental
     username: postgres
     password: postgres
     driverClassName: org.postgresql.Driver

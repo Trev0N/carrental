@@ -31,8 +31,10 @@ public class CarService {
     private UserRepository userRepository;
     private CarDetailRepository carDetailRepository;
 
+
     @Autowired
-    public CarService (UserRepository userRepository,CarRepository carRepository, CarDetailRepository carDetailRepository){
+    public CarService (UserRepository userRepository,CarRepository carRepository,
+                       CarDetailRepository carDetailRepository){
         this.userRepository=userRepository;
         this.carRepository=carRepository;
         this.carDetailRepository=carDetailRepository;
@@ -43,6 +45,7 @@ public class CarService {
     }
 
     public List<CarDTO> getAllMyCars(Principal principal){
+        authenticationAdmin();
         User user = userRepository.findByLogin(principal.getName());
         return carRepository.findByUser(user).stream().map(
                 row -> new CarDTO(
@@ -90,7 +93,7 @@ public class CarService {
                 )).collect(Collectors.toList());
 
     }
-    public void AuthenticationAdmin() {
+    public void authenticationAdmin() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         boolean hasUserRole = authentication.getAuthorities().stream()
                 .anyMatch(r -> r.getAuthority().equals("ROLEADMIN"));

@@ -70,7 +70,7 @@ public class RentService {
         Preconditions.checkNotNull(carDetailRepository.getByCar_Id(api.getIdCar()),"Car isn't ready to rent");
 
 
-        if(carDetailRepository.getByCar_Id(api.getIdCar()).getStatusEnum().equals(StatusEnum.READY_TO_RENT)) {
+        if(carDetailRepository.getByCar_Id(api.getIdCar()).getStatusEnum().equals(StatusEnum.READY_TO_RENT)&&api.getRentEndDate().isAfter(now())) {
             Rent rent = Rent.builder()
                     .car(car)
                     .user(user)
@@ -81,7 +81,7 @@ public class RentService {
             carDetail.setStatusEnum(StatusEnum.RENTED);
             carDetailRepository.save(carDetail);
         } else
-            throw new IllegalArgumentException("Car is not for rent");
+            throw new IllegalArgumentException("Car is not for rent, or you choose wrong date");
 
     }
 
