@@ -28,7 +28,7 @@ public class RentController {
         this.rentService=rentService;
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     @ApiOperation(value = "Get your rents ", notes = "Get your rent cars. ")
     public ResponseEntity<List<RentDTO>> getRent(
             @ApiIgnore
@@ -38,14 +38,15 @@ public class RentController {
     }
 
 
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    @RequestMapping(value = "/car/{id}", method = RequestMethod.POST)
     @ApiOperation(value = "Create rent ", notes = "Rent car. ")
     public ResponseEntity<Void> rentCar(
+            @PathVariable(value = "id") final Long id,
             @RequestBody @Valid @NonNull final RentCreateDTO api,
             @ApiIgnore
                     Principal principal
     ){
-        rentService.create(api, principal);
+        rentService.create(api, id, principal);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

@@ -63,21 +63,21 @@ public class RentService {
 
 
 
-    public void create(RentCreateDTO api, Principal principal){
+    public void create(RentCreateDTO api, Long id, Principal principal){
         User user = userRepository.findByLogin(principal.getName());
-        Car car =carRepository.findById(api.getIdCar()).get();
+        Car car =carRepository.findById(id).get();
 
-        Preconditions.checkNotNull(carDetailRepository.getByCar_Id(api.getIdCar()),"Car isn't ready to rent");
+        Preconditions.checkNotNull(carDetailRepository.getByCar_Id(id),"Car isn't ready to rent");
 
 
-        if(carDetailRepository.getByCar_Id(api.getIdCar()).getStatusEnum().equals(StatusEnum.READY_TO_RENT)&&api.getRentEndDate().isAfter(now())) {
+        if(carDetailRepository.getByCar_Id(id).getStatusEnum().equals(StatusEnum.READY_TO_RENT)&&api.getRentEndDate().isAfter(now())) {
             Rent rent = Rent.builder()
                     .car(car)
                     .user(user)
                     .rentEndDate(api.getRentEndDate())
                     .build();
             rentRepository.save(rent);
-            CarDetail carDetail = carDetailRepository.getByCar_Id(api.getIdCar());
+            CarDetail carDetail = carDetailRepository.getByCar_Id(id);
             carDetail.setStatusEnum(StatusEnum.RENTED);
             carDetailRepository.save(carDetail);
         } else

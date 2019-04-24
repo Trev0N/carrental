@@ -20,8 +20,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class RentCreateDTO {
 
-    @NotNull
-    private Long idCar;
+
 
     @NotNull
     @DateTimeFormat

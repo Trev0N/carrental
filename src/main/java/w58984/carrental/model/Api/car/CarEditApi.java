@@ -1,7 +1,5 @@
-package w58984.carrental.model.DTO.Car;
+package w58984.carrental.model.Api.car;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,11 +9,11 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
 @Builder
-public class CarUpdateDTO {
+public class CarEditApi {
 
     @NotEmpty
     @ApiModelProperty(value = "Register", required = true)
@@ -36,5 +34,9 @@ public class CarUpdateDTO {
     @NotNull
     @ApiModelProperty(value = "Engine power(HP)", required = true)
     private int power;
+
+    @NotNull
+    @ApiModelProperty(value = "Garage id", required = true)
+    private Long garageId;
 
 }

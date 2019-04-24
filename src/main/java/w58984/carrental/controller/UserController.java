@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import w58984.carrental.model.DTO.User.UserCreateDTO;
 import w58984.carrental.service.UserService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @RestController
@@ -32,4 +33,13 @@ public class UserController {
         userService.create(api);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+    @RequestMapping(value = "/sign-out", method = RequestMethod.DELETE)
+    @ApiOperation(value = "Sign out ", notes = "Sign out from this service. ")
+    public ResponseEntity<Boolean> singOut(HttpServletRequest request) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(userService.deleteToken(request));
+    }
+
 }

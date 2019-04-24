@@ -1,17 +1,11 @@
-package w58984.carrental.model.DTO.Car;
+package w58984.carrental.model.Api.car;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.codehaus.jackson.map.ser.FilterProvider;
-import org.codehaus.jackson.map.ser.impl.SimpleBeanPropertyFilter;
-import org.codehaus.jackson.map.ser.impl.SimpleFilterProvider;
 import org.hibernate.validator.constraints.Length;
-import w58984.carrental.model.entity.Garage;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -21,7 +15,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class CarCreateDTO {
+public class CarCreateApi {
 
 
     @NotEmpty
