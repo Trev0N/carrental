@@ -102,9 +102,7 @@ public class CarService {
         }
     }
 
-    public void edit(CarEditApi api, Principal principal){
-        authenticationAdmin();
-    }
+
 
     public void create(CarCreateApi api, Principal principal){
         User user = userRepository.findByLogin(principal.getName());
