@@ -11,6 +11,7 @@ import w58984.carrental.model.entity.User;
 import w58984.carrental.repository.UserRepository;
 
 import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 
 @Service
 public class UserService {
@@ -50,6 +51,14 @@ public class UserService {
         String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
         authorization = authorization.replaceAll("Bearer ", "");
         return defaultTokenServices.revokeToken(authorization);
+    }
+
+
+    public boolean isAdmin(Principal principal){
+        if(userRepository.findByLogin(principal.getName()).getRole()== User.Role.A)
+        return true;
+        else
+            return false;
     }
 
 

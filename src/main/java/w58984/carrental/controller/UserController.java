@@ -14,8 +14,10 @@ import w58984.carrental.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.security.Principal;
 
 @RestController
+@RequestMapping("/user")
 public class UserController {
     private final UserService userService;
 
@@ -42,4 +44,13 @@ public class UserController {
                 .body(userService.deleteToken(request));
     }
 
+
+    @RequestMapping(value = "/isadmin", method = RequestMethod.POST)
+    @ApiOperation(value = "Get role ", notes = "Get role to this service. ")
+    public ResponseEntity<Boolean> getRole(Principal principal) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(userService.isAdmin(principal));
+
+    }
 }
