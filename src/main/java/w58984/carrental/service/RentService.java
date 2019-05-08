@@ -18,6 +18,7 @@ import w58984.carrental.repository.RentRepository;
 import w58984.carrental.repository.UserRepository;
 
 import java.security.Principal;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -90,12 +91,15 @@ public class RentService {
         if(rentRepository.getByIdAndUser(id,user)==null)
             throw new IllegalArgumentException("Bad rent_id");
         Rent rent= rentRepository.getByIdAndUser(id, user);
-        CarDetail carDetail = carDetailRepository.getByCar_Id(id);
-       rent.setRentEndDate(now());
-       carDetail.setStatusEnum(StatusEnum.NEED_ATTENTION);
-       rentRepository.save(rent);
-       carDetailRepository.save(carDetail);
-
+        if(!rent.getRentEndDate().isBefore(OffsetDateTime.now())) {
+            CarDetail carDetail = carDetailRepository.getByCar_Id(rent.getCar().getId());
+            rent.setRentEndDate(now());
+            carDetail.setStatusEnum(StatusEnum.NEED_ATTENTION);
+            rentRepository.save(rent);
+            carDetailRepository.save(carDetail);
+        }
+        else
+            throw new IllegalArgumentException("You cannot rent finished renting");
     }
 
 
