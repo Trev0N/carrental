@@ -61,7 +61,10 @@ public class RentController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<Void> exception(){
+        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+    }
 
 
 }
