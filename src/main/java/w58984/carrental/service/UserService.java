@@ -39,7 +39,7 @@ public class UserService {
                 .mail(api.getMail())
                 .login(api.getLogin())
                 .password(encryptedPassword)
-                .role(User.Role.A)
+                .role(User.Role.U)
                 .status(User.Status.A)
                 .salt(salt)
                 .build();
