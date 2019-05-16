@@ -14,13 +14,10 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import w58984.carrental.model.Api.garage.EditGarageApi;
-import w58984.carrental.model.DTO.Garage.GarageCreateDTO;
+import w58984.carrental.model.Api.garage.GarageCreateApi;
 import w58984.carrental.model.entity.Garage;
 import w58984.carrental.model.entity.User;
-import w58984.carrental.repository.CarDetailRepository;
-import w58984.carrental.repository.CarRepository;
 import w58984.carrental.repository.GarageRepository;
-import w58984.carrental.repository.UserRepository;
 
 import javax.transaction.Transactional;
 import java.time.OffsetDateTime;
@@ -66,7 +63,7 @@ public class GarageServiceTest {
 
     @Test
     public void shouldCreateGarage(){
-        final GarageCreateDTO api = GarageCreateDTO.builder()
+        final GarageCreateApi api = GarageCreateApi.builder()
                 .name("test")
                 .address("test")
                 .build();

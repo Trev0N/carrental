@@ -4,17 +4,15 @@ import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import w58984.carrental.model.Api.garage.EditGarageApi;
-import w58984.carrental.model.DTO.Garage.GarageCreateDTO;
-import w58984.carrental.model.entity.Car;
+import w58984.carrental.model.Api.garage.GarageCreateApi;
+import w58984.carrental.model.DTO.Garage.GarageDTO;
 import w58984.carrental.model.entity.Garage;
-import w58984.carrental.model.entity.User;
 import w58984.carrental.repository.GarageRepository;
-import w58984.carrental.repository.UserRepository;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class GarageService {
@@ -28,8 +26,19 @@ public class GarageService {
     }
 
 
+    public List<GarageDTO> getGarages(){
+        carService.authenticationAdmin();
 
-    public void create(GarageCreateDTO api){
+
+       return garageRepository.findAll().stream().map(
+          row -> GarageDTO.builder()
+                  .address(row.getAddress())
+                  .name(row.getName())
+                  .build()).collect(Collectors.toList());
+    }
+
+
+    public void create(GarageCreateApi api){
         carService.authenticationAdmin();
         Optional.ofNullable(garageRepository.findByName(api.getName())).ifPresent(
                 e-> {

@@ -1,4 +1,4 @@
-package w58984.carrental.model.DTO.Garage;
+package w58984.carrental.model.Api.garage;
 
 
 import io.swagger.annotations.ApiModelProperty;
@@ -11,15 +11,11 @@ import javax.validation.constraints.NotEmpty;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class GarageCreateDTO {
+public class GarageCreateApi {
 
-    @NotEmpty
-    @Length(max = 255)
     @ApiModelProperty(value = "Name")
     private String name;
 
-    @NotEmpty
-    @Length(max = 255)
     @ApiModelProperty(value = "Address")
     private String address;
 
