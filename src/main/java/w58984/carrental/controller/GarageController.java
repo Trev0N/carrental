@@ -27,7 +27,7 @@ public class GarageController {
         this.garageService=garageService;
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     @ApiOperation(value = "Get garages ", notes = "Get garage list in this service. ")
     public ResponseEntity<List<GarageDTO>> getGarage(){
         return ResponseEntity.status(HttpStatus.OK)
