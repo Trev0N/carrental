@@ -23,27 +23,25 @@ import java.util.*;
 @EnableSwagger2
 public class SwaggerConfig {
     @Bean
-    public Docket api() throws IOException, XmlPullParserException {
-        MavenXpp3Reader reader = new MavenXpp3Reader();
-        Model model = reader.read(new FileReader("pom.xml"));
+    public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("w58984.carrental.controller"))
                 .build()
-                .apiInfo(apiInfo(model))
+                .apiInfo(apiInfo())
                 .protocols(protocols())
                 .securitySchemes(securitySchemes())
                 .securityContexts(securityContexts())
                 .genericModelSubstitutes(Optional.class);
     }
-    private ApiInfo apiInfo(Model model) {
+    private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("Car rental api")
                 .description("Car rental rest api")
                 .termsOfServiceUrl("github")
                 .license("MIT")
                 .licenseUrl("https://en.wikipedia.org/wiki/MIT_License")
-                .version(model.getParent().getVersion())
+                .version("0.0.1")
                 .build();
     }
 
