@@ -32,6 +32,7 @@ public class GarageService {
 
        return garageRepository.findAll().stream().map(
           row -> GarageDTO.builder()
+                  .id(row.getId())
                   .address(row.getAddress())
                   .name(row.getName())
                   .build()).collect(Collectors.toList());
@@ -63,7 +64,9 @@ public class GarageService {
         Preconditions.checkNotNull(garageRepository.findById(id),"Wrong garage id");
 
         Optional.ofNullable(garageRepository.findByName(api.getName())).ifPresent(
-                e-> {
+                e->
+                {
+                    if(e.getId()!=id)
                     throw new IllegalArgumentException("Garage with the same name exists");
                 }
         );

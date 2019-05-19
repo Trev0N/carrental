@@ -11,6 +11,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class GarageDTO {
 
+    private Long id;
+
     private String name;
 
     private String address;
