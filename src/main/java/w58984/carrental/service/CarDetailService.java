@@ -4,26 +4,36 @@ package w58984.carrental.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import w58984.carrental.model.DTO.CarDetail.CarDetailCreateDTO;
+import w58984.carrental.model.DTO.CarDetail.CarDetailDTO;
 import w58984.carrental.model.DTO.CarDetail.CarDetailUpdateDTO;
 import w58984.carrental.model.entity.Car;
 import w58984.carrental.model.entity.CarDetail;
+import w58984.carrental.model.entity.User;
 import w58984.carrental.repository.CarDetailRepository;
 import w58984.carrental.repository.CarRepository;
 import w58984.carrental.repository.UserRepository;
 
+import java.security.Principal;
 import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CarDetailService {
 
     private CarRepository carRepository;
     private CarDetailRepository carDetailRepository;
+    private CarService carService;
+    private UserRepository userRepository;
 
     @Autowired
-    public CarDetailService (CarRepository carRepository, CarDetailRepository carDetailRepository){
+    public CarDetailService (CarRepository carRepository, CarDetailRepository carDetailRepository,
+                             CarService carService, UserRepository userRepository){
         this.carRepository=carRepository;
         this.carDetailRepository=carDetailRepository;
+        this.carService=carService;
+        this.userRepository=userRepository;
     }
 
     public void create(CarDetailCreateDTO api){
@@ -65,5 +75,15 @@ public class CarDetailService {
     }
 
 
-
+    public List<CarDetailDTO> getAllMyCarsDetails(Principal principal) {
+        carService.authenticationAdmin();
+        User user = userRepository.findByLogin(principal.getName());
+        return carDetailRepository.findAll().stream().map(
+                row -> new CarDetailDTO().builder()
+                .carId(row.getCar().getId())
+                .mileage(row.getMileage())
+                .price(row.getPrice())
+                .statusEnum(row.getStatusEnum())
+                .build()).collect(Collectors.toList());
+    }
 }

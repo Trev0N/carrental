@@ -76,7 +76,7 @@ public class CarController {
     @RequestMapping(value = "/delete/{id}",method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @ApiOperation(value = "Delete car", notes = "Delete your car.")
-    public ResponseEntity<Void> delete(@PathVariable(value = "id") @PathParam(value = "id") @NonNull final Long id,
+    public ResponseEntity<Void> delete(@PathVariable(value = "id") @NonNull final Long id,
                                        @ApiIgnore Principal principal) throws IllegalAccessException {
 
 

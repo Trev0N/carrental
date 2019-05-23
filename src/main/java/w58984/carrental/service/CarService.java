@@ -131,11 +131,12 @@ public class CarService {
         Preconditions.checkNotNull(carRepository.getById(id),"Wrong car id. ");
         Preconditions.checkNotNull(garageRepository.getOne(api.getGarageId()),"Wrong garage id. ");
         User user = userRepository.findByLogin(principal.getName());
-
+        if(carRepository.getById(id).getId()!=id)
         Optional.ofNullable(carRepository.findByRegisterNameAndUser(api.getRegisterName(),user)).ifPresent(
                 e-> {
-                    throw new IllegalArgumentException("Similar car exists");
+                    throw new IllegalArgumentException("Similar registerName exists");
                 }
+
         );
 
        Car car = carRepository.getById(id);
@@ -159,8 +160,10 @@ public class CarService {
 
 
         Car car = carRepository.getById(id);
-        CarDetail carDetail = carDetailRepository.getByCar_Id(id);
-        carDetailRepository.delete(carDetail);
+        if(carDetailRepository.getByCar_Id(id)!=null) {
+            CarDetail carDetail = carDetailRepository.getByCar_Id(id);
+            carDetailRepository.delete(carDetail);
+        }
         carRepository.delete(car);
     }
 }

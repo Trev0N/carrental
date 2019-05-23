@@ -21,6 +21,7 @@ import w58984.carrental.model.entity.User;
 import w58984.carrental.model.entity.enums.StatusEnum;
 import w58984.carrental.repository.CarDetailRepository;
 import w58984.carrental.repository.CarRepository;
+import w58984.carrental.repository.UserRepository;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
@@ -45,6 +46,11 @@ public class CarDetailServiceTest {
     @Mock
     private CarDetailRepository carDetailRepository;
 
+    @Mock
+    private CarService carService;
+
+    @Mock
+    private UserRepository userRepository;
 
     @Before
     public void setUp(){
@@ -60,8 +66,9 @@ public class CarDetailServiceTest {
 
 
 
+
         SecurityContextHolder.getContext().setAuthentication(auth);
-        this.carDetailService = new CarDetailService(carRepository,carDetailRepository);
+        this.carDetailService = new CarDetailService(carRepository,carDetailRepository,carService,userRepository);
     }
     @Test
     public void shouldCreateCarDetail(){
