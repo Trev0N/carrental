@@ -78,7 +78,7 @@ public class CarDetailService {
     public List<CarDetailDTO> getAllMyCarsDetails(Principal principal) {
         carService.authenticationAdmin();
         User user = userRepository.findByLogin(principal.getName());
-        return carDetailRepository.findAll().stream().map(
+        return carDetailRepository.findAllByCar_User(user).stream().map(
                 row -> new CarDetailDTO().builder()
                 .carId(row.getCar().getId())
                 .mileage(row.getMileage())
