@@ -15,9 +15,7 @@ spring:
           use_jdbc_metadata_defaults: false
   datasource:
     platform: postgres
-    url: jdbc:postgresql://192.168.1.199/carrental
-    #jdbc:postgresql://localhost/carrental
-    #jdbc:postgresql://91.246.64.81/carrental
-    username: postgres
-    password: postgres
+    url: jdbc:postgresql://ec2-54-75-230-253.eu-west-1.compute.amazonaws.com:5432/da8td72s6n1brj
+    username: tquqimuqdtypon
+    password: fef01817e9f2e2fe55e734438bf3d6ddce0d1be9388754be39ca139152280c1f
     driverClassName: org.postgresql.Driver
