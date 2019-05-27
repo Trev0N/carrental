@@ -48,6 +48,7 @@ public class SwaggerConfig {
     private Set<String> protocols() {
         Set<String> protocols = new HashSet<>();
         protocols.add("http");
+        protocols.add("https");
         return protocols;
     }
 
