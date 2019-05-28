@@ -8,7 +8,8 @@ CREATE TABLE carrental.car_detail (
                                 "id"           BIGINT                   NOT NULL DEFAULT nextval('carrental.car_detail_seq_id'),
                                 "car_id"       BIGINT                   NOT NULL REFERENCES carrental."car" (id),
                                 "price"        DOUBLE PRECISION         NOT NULL ,
-                                "status"       VARCHAR(50)              NOT NULL
+                                "status"       VARCHAR(50)              NOT NULL ,
+                                "mileage"      BIGINT                   NOT NULL DEFAULT 0
                                );
 
 ALTER TABLE carrental.car_detail

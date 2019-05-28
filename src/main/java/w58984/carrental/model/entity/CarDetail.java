@@ -36,7 +36,8 @@ public class CarDetail {
     @Enumerated(EnumType.STRING)
     private StatusEnum statusEnum;
 
-
+    @NotNull
+    private Long mileage;
 
 
 }

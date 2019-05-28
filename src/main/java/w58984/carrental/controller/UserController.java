@@ -12,9 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 import w58984.carrental.model.DTO.User.UserCreateDTO;
 import w58984.carrental.service.UserService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.security.Principal;
 
 @RestController
+@RequestMapping("/user")
 public class UserController {
     private final UserService userService;
 
@@ -31,5 +34,23 @@ public class UserController {
     ) {
         userService.create(api);
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/sign-out", method = RequestMethod.DELETE)
+    @ApiOperation(value = "Sign out ", notes = "Sign out from this service. ")
+    public ResponseEntity<Boolean> singOut(HttpServletRequest request) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(userService.deleteToken(request));
+    }
+
+
+    @RequestMapping(value = "/isadmin", method = RequestMethod.POST)
+    @ApiOperation(value = "Get role ", notes = "Get role to this service. ")
+    public ResponseEntity<Boolean> getRole(Principal principal) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(userService.isAdmin(principal));
+
     }
 }

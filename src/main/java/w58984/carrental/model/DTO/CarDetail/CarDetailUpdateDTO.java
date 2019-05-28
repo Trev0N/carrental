@@ -1,11 +1,9 @@
 package w58984.carrental.model.DTO.CarDetail;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import w58984.carrental.model.entity.Car;
 import w58984.carrental.model.entity.enums.StatusEnum;
 
 import java.math.BigDecimal;
@@ -14,7 +12,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CarDetailCreateDTO {
+public class CarDetailUpdateDTO {
 
     private Long carId;
 
@@ -23,5 +21,4 @@ public class CarDetailCreateDTO {
     private StatusEnum statusEnum;
 
     private Long mileage;
-
 }

@@ -1,16 +1,15 @@
 package w58984.carrental.model.DTO.Car;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
 
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class CarDTO {
-
+public class CarReadyDTO {
     private Long id;
 
     private String registerName;
@@ -24,6 +23,10 @@ public class CarDTO {
     private int power;
 
     private Long garageId;
+
+    private BigDecimal price;
+
+
 
 
 }

@@ -1,18 +1,10 @@
 package w58984.carrental.model.entity;
 
-import com.fasterxml.jackson.annotation.*;
-import jdk.nashorn.internal.ir.annotations.Ignore;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import org.codehaus.jackson.map.ser.FilterProvider;
-import org.codehaus.jackson.map.ser.impl.SimpleBeanPropertyFilter;
-import org.codehaus.jackson.map.ser.impl.SimpleFilterProvider;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.CreatedDate;
-import springfox.documentation.annotations.ApiIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.time.OffsetDateTime;
 
 @Getter
 @Setter

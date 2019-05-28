@@ -1,7 +1,6 @@
 package w58984.carrental.model.entity.enums;
 
 
-import javax.persistence.Entity;
 
 
 public enum StatusEnum {
@@ -10,6 +9,7 @@ public enum StatusEnum {
     NEED_ATTENTION,
     SERVICE_PLEASE,
     ON_SERVICE,
+    RENTED,
     NO_FUEL;
 
 }
