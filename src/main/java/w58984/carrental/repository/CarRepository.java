@@ -8,7 +8,9 @@ import w58984.carrental.model.entity.User;
 
 import java.time.OffsetDateTime;
 import java.util.List;
-
+/**
+ * Interfejs z metodami pobierającymi dane z bazy danych dla klasy Car
+ */
 public interface CarRepository extends JpaRepository<Car,Long> {
 
 

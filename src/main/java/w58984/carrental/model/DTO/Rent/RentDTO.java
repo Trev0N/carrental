@@ -8,7 +8,9 @@ import w58984.carrental.model.DTO.Car.CarDTO;
 import w58984.carrental.model.entity.Car;
 
 import java.time.OffsetDateTime;
-
+/**
+ * Klasa typu Data Transfer Object do responsów dla wypożyczeń
+ */
 @Getter
 @Setter
 @AllArgsConstructor

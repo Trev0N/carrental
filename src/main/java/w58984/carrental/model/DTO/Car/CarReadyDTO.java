@@ -5,7 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-
+/**
+ * Klasa typu Data Transfer Object do responsów dla samochodów
+ */
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor

@@ -7,6 +7,9 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+/**
+ * Klasa modelowa do requestów dla utworzenia pojazdu
+ */
 @Getter
 @Setter
 @AllArgsConstructor

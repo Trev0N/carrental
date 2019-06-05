@@ -24,6 +24,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * Klasa obsługująca endpointy dotyczące samochodów w serwisie
+ */
 @Service
 public class CarService {
     private CarRepository carRepository;
@@ -41,10 +44,24 @@ public class CarService {
         this.garageRepository = garageRepository;
     }
 
+    /**
+     * <p>
+     *     Metoda szukająca samochodu według id
+     * </p>
+     * @param id ID pojazdu, który ma zostać znaleziony
+     * @return Obiekt klasy Car
+     */
     public Optional<Car> findById(Long id){
         return carRepository.findById(id);
     }
 
+    /**
+     * <p>
+     *     Metoda szukająca wszystkie pojazdy, dla użytkowników z rolą administratora
+     * </p>
+     * @param principal Zmienna zawierająca dane aktualnie zalogowanego użytkownika
+     * @return Liste samochodów (klasa CarDTO)
+     */
     public List<CarDTO> getAllMyCars(Principal principal){
         authenticationAdmin();
         User user = userRepository.findByLogin(principal.getName());
@@ -62,6 +79,12 @@ public class CarService {
 
     }
 
+    /**
+     * <p>
+     *     Metoda znajdująca wszystkie pojazdy w serwisie
+     * </p>
+     * @return Liste samochodów (klasa CarDTO)
+     */
     public List<CarDTO> getAll(){
         return carRepository.findAll().stream().map(
                 row -> new CarDTO(
@@ -76,8 +99,13 @@ public class CarService {
 
     }
 
+    /**
+     * <p>
+     *     Metoda szukająca wszystkie samochody gotowe do wypożyczenia
+     * </p>
+     * @return Liste samochodów (klasa CarReadyDTO)
+     */
     public List<CarReadyDTO> getAllReady(){
-
         return  carDetailRepository.findAllByStatusEnum(StatusEnum.READY_TO_RENT).stream().map(
                 row -> new CarReadyDTO(
                         row.getCar().getId(),
@@ -93,6 +121,12 @@ public class CarService {
                 )).collect(Collectors.toList());
 
     }
+
+    /**
+     * <p>
+     *     Metoda weryfikująca czy użytkownik jest administratorem
+     * </p>
+     */
     public void authenticationAdmin() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         boolean hasUserRole = authentication.getAuthorities().stream()
@@ -103,7 +137,13 @@ public class CarService {
     }
 
 
-
+    /**
+     * <p>
+     *     Metoda tworząca nowy pojazd w serwisie
+     * </p>
+     * @param api Dane do utworzenia pojazdu
+     * @param principal Informacje o użytkowniku wywołującym metode
+     */
     public void create(CarCreateApi api, Principal principal){
         User user = userRepository.findByLogin(principal.getName());
         Optional.ofNullable(carRepository.findByRegisterNameAndUser(api.getRegisterName(),user)).ifPresent(
@@ -126,6 +166,14 @@ public class CarService {
         carRepository.save(car);
     }
 
+    /**
+     * <p>
+     *     Metoda aktualizująca pojazd w serwisie
+     * </p>
+     * @param id ID pojazdu
+     * @param api Nowe dane dla pojazdu
+     * @param principal Informacje o użytkowniku wywołującym metode
+     */
     public void update(Long id,CarEditApi api, Principal principal){
         authenticationAdmin();
         Preconditions.checkNotNull(carRepository.getById(id),"Wrong car id. ");
@@ -151,6 +199,14 @@ public class CarService {
         carRepository.save(car);
     }
 
+    /**
+     * <p>
+     *     Metoda usuwająca pojazd z serwisu
+     * </p>
+     * @param id ID pojazdu
+     * @param principal Informacje o użytkowniku wywołującym metode
+     * @throws IllegalAccessException
+     */
     public void delete(Long id, Principal principal) throws IllegalAccessException {
         authenticationAdmin();
         User user = userRepository.findByLogin(principal.getName());

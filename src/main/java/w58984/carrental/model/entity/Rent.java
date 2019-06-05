@@ -9,7 +9,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.time.OffsetDateTime;
 import java.util.Date;
-
+/**
+ * Klasa z encjami dla wypożyczeń
+ */
 
 @Getter
 @Setter

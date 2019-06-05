@@ -21,6 +21,9 @@ import w58984.carrental.service.MyUserDetails;
 
 import javax.sql.DataSource;
 
+/**
+ * Klasa konfigurująca serwer autoryzacyjny
+ */
 @Configuration
 @EnableAuthorizationServer
 @EnableResourceServer

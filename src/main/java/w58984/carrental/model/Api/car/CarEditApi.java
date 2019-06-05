@@ -8,7 +8,9 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-
+/**
+ * Klasa modelowa do requestów dla edycji pojazdu
+ */
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor

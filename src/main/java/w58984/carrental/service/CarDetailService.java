@@ -19,6 +19,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * Klasa obsługująca endpointy dotyczące szczegółów samochodów w serwisie
+ */
 @Service
 public class CarDetailService {
 
@@ -36,6 +39,12 @@ public class CarDetailService {
         this.userRepository=userRepository;
     }
 
+    /**
+     * <p>
+     * Metoda tworząca nowe szczegóły pojazdu w serwisie
+     * </p>
+     * @param api Dane do utworzenia szczegółów pojazdu
+     */
     public void create(CarDetailCreateDTO api){
         Car car = carRepository.getById(api.getCarId());
         if (carDetailRepository.getByCar_Id(api.getCarId()) != null) {
@@ -50,7 +59,12 @@ public class CarDetailService {
                                 .build();
         carDetailRepository.save(carDetail);
     }
-
+    /**
+     * <p>
+     * Metoda aktualizująca szczegóły pojazdu w serwisie
+     * </p>
+     * @param api Dane do zaktualizowania szczegółów pojazdu
+     */
     public CarDetailUpdateDTO updateDetails(CarDetailUpdateDTO api){
         CarDetail carDetail = carDetailRepository.getByCar_Id(api.getCarId());
         if(carDetail==null)
@@ -74,7 +88,13 @@ public class CarDetailService {
                 .build();
     }
 
-
+    /**
+     * <p>
+     * Metoda szukająca detale wszystkich samochodów użytkownika
+     * </p>
+     * @param principal Informacje o użytkowniku wywołującym metode
+     * @return Liste detali samochodów tylko dla użytkownika wywołującego metode (klasa CarDetailDTO)
+     */
     public List<CarDetailDTO> getAllMyCarsDetails(Principal principal) {
         carService.authenticationAdmin();
         User user = userRepository.findByLogin(principal.getName());

@@ -17,6 +17,9 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import w58984.carrental.service.MyUserDetails;
 
+/**
+ * Klasa konfigurująca zabezpieczenia w serwisie
+ */
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {

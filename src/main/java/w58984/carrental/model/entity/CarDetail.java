@@ -9,7 +9,9 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
-
+/**
+ * Klasa z encjami dla detali samochodów
+ */
 
 @Getter
 @Setter

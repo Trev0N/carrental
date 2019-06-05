@@ -12,6 +12,9 @@ import w58984.carrental.repository.UserRepository;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 
+/**
+ * Klasa obsługująca endpointy dotyczące uzytkowników
+ */
 @Service
 public class UserService {
     private UserRepository userRepository;
@@ -24,7 +27,12 @@ public class UserService {
         this.defaultTokenServices = defaultTokenServices;
     }
 
-
+    /**
+     * <p>
+     *     Metoda tworząca użytkownika w systemie
+     * </p>
+     * @param api Dane do utworzenia użytkownika
+     */
     public void create(UserCreateDTO api) {
         String salt = BCrypt.gensalt();
         String encryptedPassword = BCrypt.hashpw(api.getPassword(), salt);
@@ -46,13 +54,26 @@ public class UserService {
         userRepository.save(user);
     }
 
+    /**
+     * <p>
+     *     Metoda wylogowująca użytkownika z systemu
+     * </p>
+     * @param request Są to szczegóły requesta który dochodzi do systemmu
+     * @return True jeśli wylogowano
+     */
     public boolean deleteToken(HttpServletRequest request) {
         String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
         authorization = authorization.replaceAll("Bearer ", "");
         return defaultTokenServices.revokeToken(authorization);
     }
 
-
+    /**
+     * <p>
+     *     Metoda sprawdzająca czy użytkownik jest adminem
+     * </p>
+     * @param principal Informacje o użytkowniku wywołującym metode
+     * @return True jesli jest adminem
+     */
     public boolean isAdmin(Principal principal){
         if(userRepository.findByLogin(principal.getName()).getRole()== User.Role.A)
         return true;

@@ -9,7 +9,9 @@ import w58984.carrental.model.entity.Car;
 import w58984.carrental.model.entity.enums.StatusEnum;
 
 import java.math.BigDecimal;
-
+/**
+ * Klasa typu Data Transfer Object do responsów dla detali samochodów
+ */
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor

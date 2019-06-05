@@ -17,6 +17,9 @@ import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
+/**
+ * Klasa z deklaracjami endpointów dla garaży
+ */
 @RestController
 @RequestMapping(value = "/garage")
 public class GarageController {
@@ -27,6 +30,12 @@ public class GarageController {
         this.garageService=garageService;
     }
 
+    /**
+     * <p>
+     *     Metoda tworząca endpoint do wyświetlania list wszystkich garaży
+     * </p>
+     * @return Liste klasy GarageDTO oraz kod 200
+     */
     @RequestMapping(method = RequestMethod.GET)
     @ApiOperation(value = "Get garages ", notes = "Get garage list in this service. ")
     public ResponseEntity<List<GarageDTO>> getGarage(){
@@ -35,7 +44,13 @@ public class GarageController {
     }
 
 
-
+    /**
+     * <p>
+     *     Metoda tworząca endpoint do tworzenia nowego garażu
+     * </p>
+     * @param api Dane wymagane przy requescie do utworzenia nowego garażu
+     * @return kod 201
+     */
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ApiOperation(value = "Create garage ", notes = "Add garage to this service. ")
     public ResponseEntity<Void> createGarage(
@@ -45,6 +60,14 @@ public class GarageController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    /**
+     * <p>
+     *     Metoda tworząca endpoint do edycji garażu
+     * </p>
+     * @param id ID garażu
+     * @param api Dane wymagane przy requescie do edycji garażu
+     * @return kod 200
+     */
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT)
     @ApiOperation(value = "Edit garage ", notes = "Edit garage in this service. ")
     public ResponseEntity<Void> editGarage(
@@ -56,6 +79,13 @@ public class GarageController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    /**
+     * <p>
+     *     Metoda tworząca endpoint do usuwania garażu
+     * </p>
+     * @param id ID garażu
+     * @return kod 204
+     */
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     @ApiOperation(value = "Delete garage ", notes = "Delete garage in this service. ")
     public ResponseEntity<Void> deleteGarage(
