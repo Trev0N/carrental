@@ -4,7 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
+/**
+ * Klasa typu Data Transfer Object do responsów dla garaży
+ */
 @Getter
 @Builder
 @AllArgsConstructor

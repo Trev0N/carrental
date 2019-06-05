@@ -18,6 +18,9 @@ import javax.websocket.server.PathParam;
 import java.security.Principal;
 import java.util.List;
 
+/**
+ * Klasa z deklaracjami endpointów dla wypożyczeń pojazdów
+ */
 @RestController
 @RequestMapping(value = "/rent")
 public class RentController {
@@ -28,6 +31,13 @@ public class RentController {
         this.rentService=rentService;
     }
 
+    /**
+     * <p>
+     *     Metoda tworząca endpoint do wyświetlania wszystkich twoich wypożyczeń
+     * </p>
+     * @param principal Informacje o użytkowniku pobierane automatycznie
+     * @return Liste klasy RentDTO oraz kod 200
+     */
     @RequestMapping(method = RequestMethod.GET)
     @ApiOperation(value = "Get your rents ", notes = "Get your rent cars. ")
     public ResponseEntity<List<RentDTO>> getRent(
@@ -37,7 +47,15 @@ public class RentController {
       return ResponseEntity.status(HttpStatus.OK).body(rentService.getAll(principal));
     }
 
-
+    /**
+     * <p>
+     *     Metoda tworząca endpoint do utworzenia nowego wypożyczenia
+     * </p>
+     * @param id ID samochodu
+     * @param api Dane wymagane w requescie do wypożyczenia pojazdu
+     * @param principal Informacje o użytkowniku pobierane automatycznie
+     * @return kod 201
+     */
     @RequestMapping(value = "/car/{id}", method = RequestMethod.POST)
     @ApiOperation(value = "Create rent ", notes = "Rent car. ")
     public ResponseEntity<Void> rentCar(
@@ -50,6 +68,14 @@ public class RentController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    /**
+     * <p>
+     *     Metoda tworząca endpoint do zwracania pojazdów
+     * </p>
+     * @param id ID wypożyczenia
+     * @param principal Informacje o użytkowniku pobierane automatycznie
+     * @return kod 204
+     */
     @RequestMapping(value = "/return/{id}", method = RequestMethod.DELETE)
     @ApiOperation(value = "End rent ", notes = "Return car. ")
     public ResponseEntity<Void> giveBack(
@@ -61,6 +87,10 @@ public class RentController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    /**
+     * Metoda wyłapująca wyjątki
+     * @return kod 403
+     */
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<Void> exception(){
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);

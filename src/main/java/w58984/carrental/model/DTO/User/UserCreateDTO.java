@@ -9,7 +9,9 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
-
+/**
+ * Klasa typu Data Transfer Object do responsów dla użytkowników
+ */
 @Getter
 @Setter
 @AllArgsConstructor

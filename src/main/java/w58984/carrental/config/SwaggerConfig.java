@@ -19,6 +19,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * Klasa konfigurująca Swaggera
+ */
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
@@ -48,6 +51,7 @@ public class SwaggerConfig {
     private Set<String> protocols() {
         Set<String> protocols = new HashSet<>();
         protocols.add("http");
+        protocols.add("https");
         return protocols;
     }
 

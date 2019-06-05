@@ -6,7 +6,9 @@ import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotEmpty;
-
+/**
+ * Klasa modelowa do requestów dla utworzenia garażu
+ */
 @Getter
 @Builder
 @AllArgsConstructor

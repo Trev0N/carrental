@@ -11,6 +11,11 @@ import org.springframework.stereotype.Service;
 import w58984.carrental.model.entity.User;
 import w58984.carrental.repository.UserRepository;
 
+/**
+ * <p>
+ *     Klasa obsługująca logowanie do systemu
+ * </p>
+ */
 @Service
 public class MyUserDetails implements UserDetailsService {
     private UserRepository userRepository;
@@ -20,6 +25,14 @@ public class MyUserDetails implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
+    /**
+     * <p>
+     *     Metoda wyszukująca użytkownika i przyznająca odpowiednie uprawnieani
+     * </p>
+     * @param username Login używany do zalogowania
+     * @return Obiekt UserDetails używany do logowania
+     * @throws UsernameNotFoundException Brak użytkownika w systemie
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         final User user = userRepository.findByLogin(username);
