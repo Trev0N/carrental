@@ -232,8 +232,7 @@ public class CarServiceTest {
         carService.update(car.getId(),api,principal);
         verify(userRepository, times(1)).findByLogin(user.getLogin());
         verify(garageRepository, times(2)).getOne(id);
-        verify(carRepository,times(2)).getById(id);
-        verify(carRepository,times(1)).findByRegisterNameAndUser(api.getRegisterName(),user);
+        verify(carRepository,times(3)).getById(id);
         verify(carRepository,times(1)).save(any(Car.class));
 
         verifyNoMoreInteractions(userRepository);
@@ -277,7 +276,7 @@ public class CarServiceTest {
         carService.delete(car.getId(), principal);
         verify(carRepository,times(1)).getByIdAndUser(car.getId(),user);
         verify(carRepository,times(1)).getById(car.getId());
-        verify(carDetailRepository,times(1)).getByCar_Id(car.getId());
+        verify(carDetailRepository,times(2)).getByCar_Id(car.getId());
         verify(carDetailRepository,times(1)).delete(carDetail);
         verify(carRepository, times(1)).delete(car);
         verify(userRepository,times(1)).findByLogin(principal.getName());
