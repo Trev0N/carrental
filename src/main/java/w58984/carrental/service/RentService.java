@@ -25,6 +25,9 @@ import java.util.stream.Collectors;
 
 import static java.time.OffsetDateTime.now;
 
+/**
+ * Klasa obsługująca endpointy dotyczące samochodów w serwisie
+ */
 @Service
 public class RentService {
 
@@ -42,6 +45,13 @@ public class RentService {
         this.carDetailRepository=carDetailRepository;
     }
 
+    /**
+     * <p>
+     *     Klasa wyszukujaca wszystkie twoje wypozyczenia
+     * </p>
+     * @param principal Informacje o użytkowniku wywołującym metode
+     * @return Liste wypożyczeń (klasa RentDTO)
+     */
     public List<RentDTO> getAll(Principal principal){
         User user = userRepository.findByLogin(principal.getName());
         return rentRepository.findAllByUser(user).stream().map(
@@ -63,7 +73,14 @@ public class RentService {
     }
 
 
-
+    /**
+     * <p>
+     *     Metoda tworząca nowe wypożyczenie w systemie
+     * </p>
+     * @param api Dane do utworzenia wypożyczenia
+     * @param id ID pojazdu
+     * @param principal Informacje o użytkowniku wywołującym metode
+     */
     public void create(RentCreateDTO api, Long id, Principal principal){
         User user = userRepository.findByLogin(principal.getName());
         Car car =carRepository.findById(id).get();
@@ -86,6 +103,13 @@ public class RentService {
 
     }
 
+    /**
+     * <p>
+     *     Metoda do zakończenia wypożyczenia w systemie
+     * </p>
+     * @param id ID Wypożyczenia
+     * @param principal Informacje o użytkowniku wywołującym metode
+     */
     public void delete(Long id, Principal principal){
         User user = userRepository.findByLogin(principal.getName());
         if(rentRepository.getByIdAndUser(id,user)==null)

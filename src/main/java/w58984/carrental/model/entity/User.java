@@ -8,7 +8,9 @@ import org.springframework.data.annotation.CreatedDate;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.OffsetDateTime;
-
+/**
+ * Klasa z encjami dla użytkowników
+ */
 @Getter
 @Setter
 @AllArgsConstructor

@@ -19,3 +19,4 @@ spring:
     username: tquqimuqdtypon
     password: fef01817e9f2e2fe55e734438bf3d6ddce0d1be9388754be39ca139152280c1f
     driverClassName: org.postgresql.Driver
+

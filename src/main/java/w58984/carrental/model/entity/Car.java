@@ -1,19 +1,18 @@
 package w58984.carrental.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
-
+/**
+ * Klasa z encjami dla samochodów
+ */
 @Getter
 @Setter
 @AllArgsConstructor

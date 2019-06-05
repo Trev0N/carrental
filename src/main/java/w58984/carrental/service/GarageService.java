@@ -14,6 +14,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * Klasa obsługująca endpointy dotyczące garaży w serwisie
+ */
 @Service
 public class GarageService {
     private GarageRepository garageRepository;
@@ -25,7 +28,12 @@ public class GarageService {
         this.carService=carService;
     }
 
-
+    /**
+     * <p>
+     *     Metoda szukająca wszystkie garaże w systemie
+     * </p>
+     * @return Liste garaży (klasa GarageDTO)
+     */
     public List<GarageDTO> getGarages(){
         carService.authenticationAdmin();
 
@@ -38,7 +46,12 @@ public class GarageService {
                   .build()).collect(Collectors.toList());
     }
 
-
+    /**
+     * <p>
+     *     Metoda tworząca nowy garaż w systemie
+     * </p>
+     * @param api Dane do utworzenia nowego garażu
+     */
     public void create(GarageCreateApi api){
         carService.authenticationAdmin();
         Optional.ofNullable(garageRepository.findByName(api.getName())).ifPresent(
@@ -56,6 +69,13 @@ public class GarageService {
         garageRepository.save(garage);
     }
 
+    /**
+     * <p>
+     *     Metoda edytujca garaże w systemie
+     * </p>
+     * @param id ID garażu
+     * @param api Dame do zaktualizowania garażu
+     */
     public void edit(Long id ,EditGarageApi api){
 
         carService.authenticationAdmin();
@@ -82,7 +102,12 @@ public class GarageService {
 
     }
 
-
+    /**
+     * <p>
+     *     Metoda do usunięcia garażu
+     * </p>
+     * @param id ID garażu
+     */
     public void delete(Long id){
         carService.authenticationAdmin();
 

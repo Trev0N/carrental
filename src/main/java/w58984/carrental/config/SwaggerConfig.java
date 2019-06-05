@@ -19,6 +19,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * Klasa konfigurująca Swaggera
+ */
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
