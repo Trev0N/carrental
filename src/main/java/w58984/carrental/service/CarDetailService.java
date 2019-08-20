@@ -98,12 +98,19 @@ public class CarDetailService {
     public List<CarDetailDTO> getAllMyCarsDetails(Principal principal) {
         carService.authenticationAdmin();
         User user = userRepository.findByLogin(principal.getName());
-        return carDetailRepository.findAllByCar_User(user).stream().map(
-                row -> new CarDetailDTO().builder()
+        return findAllByCarUser(user).stream().map(
+                row -> CarDetailDTO.builder()
                 .carId(row.getCar().getId())
                 .mileage(row.getMileage())
                 .price(row.getPrice())
                 .statusEnum(row.getStatusEnum())
                 .build()).collect(Collectors.toList());
+    }
+
+    public Optional<CarDetail> findById(Long id) {
+         return carDetailRepository.findById(id);
+    }
+    public List<CarDetail> findAllByCarUser(User user){
+        return carDetailRepository.findAllByCar_User(user);
     }
 }

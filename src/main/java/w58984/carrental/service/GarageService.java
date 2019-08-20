@@ -111,13 +111,15 @@ public class GarageService {
     public void delete(Long id){
         carService.authenticationAdmin();
 
-        Preconditions.checkNotNull(garageRepository.findById(id),"Wrong garage id");
-        Garage garage = garageRepository.findById(id).get();
+        Preconditions.checkArgument(findById(id).isPresent(),"Wrong garage id");
+        Garage garage = findById(id).get();
 
         garageRepository.delete(garage);
 
     }
 
 
-
+    public Optional<Garage> findById(Long id) {
+        return garageRepository.findById(id);
+    }
 }

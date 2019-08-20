@@ -109,9 +109,10 @@ public class CarController {
     public ResponseEntity<Void> delete(@PathVariable(value = "id") @NonNull final Long id,
                                        @ApiIgnore Principal principal) throws IllegalAccessException {
 
-
-    carService.delete(id, principal);
-    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    return carService.findById(id).map(car ->{
+            carService.delete(car.getId(),principal);
+    return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);})
+            .orElseGet(() ->  new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     /**
@@ -123,7 +124,7 @@ public class CarController {
      * @param principal Informacje o użytkowniku pobierane automatycznie
      * @return kod 201
      */
-    @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT)
     @ApiOperation(value = "Edit car ", notes = "Edit car in service. ")
     public ResponseEntity<Void> editCar(
             @PathVariable(value = "id") Long id,
@@ -131,9 +132,11 @@ public class CarController {
             @ApiIgnore
                     Principal principal
     ){
-
-        carService.update(id, api, principal);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return carService.findById(id)
+                .map(carToUpdate -> {
+                    carService.update(carToUpdate.getId(), api, principal);
+                    return new ResponseEntity<Void>(HttpStatus.OK);
+                }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
 

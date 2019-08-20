@@ -16,6 +16,7 @@ import w58984.carrental.service.CarService;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
+import java.util.function.Supplier;
 
 /**
  * Klasa z deklaracjami endpointów dla detali samochodów
@@ -74,7 +75,10 @@ public class CarDetailController {
     @ApiOperation(value = "Update car detail",notes = "Update car details that you want. ")
     public ResponseEntity<CarDetailUpdateDTO> updateCarDetail(@RequestBody @Valid CarDetailUpdateDTO carDetailUpdateDTO){
         carService.authenticationAdmin();
-       return ResponseEntity.status(HttpStatus.OK).body(carDetailService.updateDetails(carDetailUpdateDTO));
+        return carDetailService.findById(carDetailUpdateDTO.getCarId()).map(
+                carDetail -> ResponseEntity.status(HttpStatus.OK).body(carDetailService.updateDetails(carDetailUpdateDTO))
+        ).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
+
     }
 
 

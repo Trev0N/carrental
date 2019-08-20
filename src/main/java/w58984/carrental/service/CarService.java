@@ -176,10 +176,10 @@ public class CarService {
      */
     public void update(Long id,CarEditApi api, Principal principal){
         authenticationAdmin();
-        Preconditions.checkNotNull(carRepository.getById(id),"Wrong car id. ");
+        Preconditions.checkArgument(findById(id).isPresent(),"Wrong car id.");
         Preconditions.checkNotNull(garageRepository.getOne(api.getGarageId()),"Wrong garage id. ");
         User user = userRepository.findByLogin(principal.getName());
-        if(carRepository.getById(id).getId()!=id)
+        if(!carRepository.findById(id).get().getId().equals(id))
         Optional.ofNullable(carRepository.findByRegisterNameAndUser(api.getRegisterName(),user)).ifPresent(
                 e-> {
                     throw new IllegalArgumentException("Similar registerName exists");
@@ -207,12 +207,16 @@ public class CarService {
      * @param principal Informacje o użytkowniku wywołującym metode
      * @throws IllegalAccessException
      */
-    public void delete(Long id, Principal principal) throws IllegalAccessException {
+    public void delete(Long id, Principal principal) {
         authenticationAdmin();
         User user = userRepository.findByLogin(principal.getName());
 
        if(carRepository.getByIdAndUser(id, user)==null)
-           throw new IllegalAccessException("You can not delete not your's car, or your car isn't exists");
+           try {
+               throw new IllegalAccessException("You can not delete not your's car, or your car isn't exists");
+           } catch (IllegalAccessException e) {
+               e.printStackTrace();
+           }
 
 
         Car car = carRepository.getById(id);

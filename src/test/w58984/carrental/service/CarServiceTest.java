@@ -226,13 +226,15 @@ public class CarServiceTest {
         user.setLogin("test");
 
         when(userRepository.findByLogin(principal.getName())).thenReturn(user);
+        when(carService.findById(id)).thenReturn(Optional.ofNullable(car));
         when(carRepository.getById(id)).thenReturn(car);
         when(carRepository.findByRegisterNameAndUser(api.getRegisterName(),user)).thenReturn(null);
         when(garageRepository.getOne(id)).thenReturn(garage);
         carService.update(car.getId(),api,principal);
         verify(userRepository, times(1)).findByLogin(user.getLogin());
+        verify(carRepository,times(2)).findById(id);
         verify(garageRepository, times(2)).getOne(id);
-        verify(carRepository,times(3)).getById(id);
+        verify(carRepository,times(1)).getById(id);
         verify(carRepository,times(1)).save(any(Car.class));
 
         verifyNoMoreInteractions(userRepository);

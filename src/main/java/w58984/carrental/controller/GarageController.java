@@ -74,9 +74,12 @@ public class GarageController {
             @PathVariable(value = "id") final Long id,
             @RequestBody @Valid @NonNull final EditGarageApi api
     ){
+        return garageService.findById(id).map(
+                garage -> {
+                    garageService.edit(garage.getId(),api);
+                    return new ResponseEntity<Void>(HttpStatus.OK);
+                }).orElseGet(() -> new ResponseEntity(HttpStatus.NOT_FOUND));
 
-        garageService.edit(id,api);
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     /**
@@ -92,8 +95,12 @@ public class GarageController {
             @PathVariable(value = "id") final Long id
     ){
 
-        garageService.delete(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return garageService.findById(id).map(
+                garage -> {
+                    garageService.delete(garage.getId());
+                    return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+                }
+        ).orElseGet(() -> new ResponseEntity(HttpStatus.NOT_FOUND));
     }
 
 
