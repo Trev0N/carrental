@@ -20,12 +20,13 @@ public class ApplicationRunner {
 }
 
 
-//@Component
-//class CustomizationPort implements WebServerFactoryCustomizer< ConfigurableServletWebServerFactory > {
-//
-//    @Override
-//    public void customize(ConfigurableServletWebServerFactory server) {
-//        server.setPort(9001);
-//    }
-//
-//}
+
+@Component
+class CustomizationPort implements WebServerFactoryCustomizer< ConfigurableServletWebServerFactory > {
+
+    @Override
+    public void customize(ConfigurableServletWebServerFactory server) {
+        server.setPort(9001);
+    }
+
+}
