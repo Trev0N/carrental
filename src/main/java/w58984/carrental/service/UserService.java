@@ -37,7 +37,7 @@ public class UserService {
         String salt = BCrypt.gensalt();
         String encryptedPassword = BCrypt.hashpw(api.getPassword(), salt);
 
-        User userExists = userRepository.findByLogin(api.getLogin());
+        User userExists = findByLogin(api.getLogin());
         if(!(userExists ==null))
         throw new IllegalArgumentException("Your login is busy");
 
@@ -54,6 +54,11 @@ public class UserService {
         userRepository.save(user);
     }
 
+
+
+    public User findByLogin(String login){
+        return userRepository.findByLogin(login);
+    }
     /**
      * <p>
      *     Metoda wylogowująca użytkownika z systemu

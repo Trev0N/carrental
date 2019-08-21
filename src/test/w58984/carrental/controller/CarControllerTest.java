@@ -45,7 +45,7 @@ public class CarControllerTest {
         this.mockMvc = MockMvcBuilders.standaloneSetup(carController).build();
     }
 
-@Test
+    @Test
     public void shouldCreateNewCar() throws Exception {
         final CarCreateApi api = CarCreateApi.builder()
                 .mark("Skoda")

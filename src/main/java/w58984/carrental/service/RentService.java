@@ -54,7 +54,7 @@ public class RentService {
      */
     public List<RentDTO> getAll(Principal principal){
         User user = userRepository.findByLogin(principal.getName());
-        return rentRepository.findAllByUser(user).stream().map(
+        return findAllByUser(user).stream().map(
                 row-> new RentDTO(
                         row.getId(),
                         row.getRentStartDate(),
@@ -72,6 +72,9 @@ public class RentService {
 
     }
 
+    public List<Rent> findAllByUser(User user){
+        return rentRepository.findAllByUser(user);
+    }
 
     /**
      * <p>
@@ -83,12 +86,12 @@ public class RentService {
      */
     public void create(RentCreateDTO api, Long id, Principal principal){
         User user = userRepository.findByLogin(principal.getName());
-        Car car =carRepository.findById(id).get();
+        Car car =findById(id).get();
 
         Preconditions.checkNotNull(carDetailRepository.getByCar_Id(id),"Car isn't ready to rent");
 
 
-        if(carDetailRepository.getByCar_Id(id).getStatusEnum().equals(StatusEnum.READY_TO_RENT)&&api.getRentEndDate().isAfter(now())) {
+        if(getByCar_Id(id).getStatusEnum().equals(StatusEnum.READY_TO_RENT)&&api.getRentEndDate().isAfter(now())) {
             Rent rent = Rent.builder()
                     .car(car)
                     .user(user)
@@ -103,6 +106,13 @@ public class RentService {
 
     }
 
+    public CarDetail getByCar_Id(Long id){
+        return carDetailRepository.getByCar_Id(id);
+    }
+
+    public Optional<Car> findById(Long id){
+        return carRepository.findById(id);
+    }
     /**
      * <p>
      *     Metoda do zakończenia wypożyczenia w systemie

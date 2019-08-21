@@ -27,7 +27,7 @@ public class RentController {
     private final RentService rentService;
 
     @Autowired
-    private RentController(RentService rentService){
+    public RentController(RentService rentService){
         this.rentService=rentService;
     }
 
@@ -64,8 +64,10 @@ public class RentController {
             @ApiIgnore
                     Principal principal
     ){
-        rentService.create(api, id, principal);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+       return rentService.findById(id).map(car -> {
+           rentService.create(api, car.getId(), principal);
+           return new ResponseEntity<Void>(HttpStatus.CREATED);
+       }).orElseGet(() -> new ResponseEntity(HttpStatus.NOT_FOUND));
     }
 
     /**
@@ -79,7 +81,7 @@ public class RentController {
     @RequestMapping(value = "/return/{id}", method = RequestMethod.DELETE)
     @ApiOperation(value = "End rent ", notes = "Return car. ")
     public ResponseEntity<Void> giveBack(
-            @PathVariable(value = "id") @PathParam(value = "id") @NonNull final Long id,
+            @PathVariable(value = "id") @NonNull final Long id,
             @ApiIgnore
                     Principal principal
     ){
